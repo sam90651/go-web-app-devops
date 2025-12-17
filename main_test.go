@@ -1,5 +1,3 @@
-// Test the main function
-
 package main
 
 import (
@@ -8,15 +6,16 @@ import (
 	"testing"
 )
 
-func TestMain(t *testing.T) {
+func TestHomePage(t *testing.T) {
 	req, err := http.NewRequest("GET", "/home", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(homePage)
 
+	// Use the exact handler used by /home in main.go
+	handler := serveEmbeddedHTML("home.html")
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
@@ -24,7 +23,6 @@ func TestMain(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	// Just verify the code not html content
 	expected := "text/html; charset=utf-8"
 	if contentType := rr.Header().Get("Content-Type"); contentType != expected {
 		t.Errorf("handler returned unexpected content type: got %v want %v",
