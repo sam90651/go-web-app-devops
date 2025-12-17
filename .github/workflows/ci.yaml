@@ -28,6 +28,9 @@ jobs:
 
     - name: Build
       run: go build -o go-web-app
+    
+    - name: Test
+      run: go test ./... 
   
   code-quality:
     runs-on: ubuntu-latest
