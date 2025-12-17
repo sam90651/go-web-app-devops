@@ -13,8 +13,6 @@ func TestHomePage(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-
-	// Use the exact handler used by /home in main.go
 	handler := serveEmbeddedHTML("home.html")
 	handler.ServeHTTP(rr, req)
 
